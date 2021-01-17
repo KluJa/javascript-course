@@ -11,7 +11,7 @@ function changeText(node, text) {
 // input is a string that tells whether the value is low or high relative to generated Number.
 function lowHighGuess(valueSize) {
 	score--;
-	changeText(".message", `You are not correct. Number too "${valueSize}"`);
+	changeText(".message", `You are not correct. Number too ${valueSize}`);
 	changeText(".score", score);
 }
 
@@ -23,19 +23,15 @@ function reset() {
 	document.querySelector(".number").style.width = "15rem";
 	changeText(".number", "?");
 	document.querySelector(".guess").value = "";
-	changeText(".message", "?");
+	changeText(".message", "Start guessing...");
 	changeText(".score", score);
-
-	// document.querySelector(".number").textContent = "?";
-	// document.querySelector(".message").textContent = "Start guessing...";
-	// document.querySelector(".score").textContent = score;
 }
 
 //Function faciliating the main logic of the "game"
 function guessing() {
 	const guess = Number(document.querySelector(".guess").value);
 	// ----- Invalid input
-	if (guess < 1 && guess > 20) {
+	if (guess < 1 || guess > 20) {
 		changeText(".number", guess);
 		changeText(
 			".message",
@@ -51,12 +47,13 @@ function guessing() {
 		changeText(".message", "You are Correct!");
 		//Validate that score is higher than highscore and, if true, set highscore
 		score > highscore ? (highscore = score) : highscore;
+		changeText(".highscore", highscore);
 	} // ----- Low Guess
 	else if (guess < randomNumber) {
-		lowHighGuess(low);
+		lowHighGuess("low");
 	} // ----- High Guess
 	else if (guess > randomNumber) {
-		lowHighGuess(high);
+		lowHighGuess("high");
 	}
 }
 
